@@ -6,20 +6,21 @@ class LinkGenerator
   end
 
   def to_html
-    puts "<html>"
-    puts "  <body>"
-    puts "    <ol>"
+    str = ""
+    str << "<html>\n"
+    str << "  <body>\n"
+    str << "    <ol>\n"
     @links.each do |url|
-      puts "      <li><a href=\"#{url}\">#{url}</a></li>"
+      str << "      <li><a href=\"#{url}\">#{url}</a></li>\n"
     end
-    puts "    </ol>"
-    puts "  </body>"
-    puts "</html>"
+    str << "    </ol>\n"
+    str << "  </body>\n"
+    str << "</html>\n"
+    str
   end
 
 end   # of class LinkGenerator
 
 
-file = ARGV.shift
-LinkGenerator.new(file).to_html
+print LinkGenerator.new(ARGV.shift).to_html
 
