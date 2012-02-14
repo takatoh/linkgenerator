@@ -1,5 +1,6 @@
 #! ruby
 
+require 'csv'
 require 'erb'
 require 'optparse'
 
@@ -10,9 +11,9 @@ class LinkGenerator
 <html>
   <body>
     <ol>
-<% @links.each do |url| -%>
-      <li><a href="<%= url %>"><%= url %></a></li>
-<% end -%>
+      <%- @links.each do |link| -%>
+      <li><a href="<%= link.url %>"><%= link.name || link.url %></a></li>
+      <%- end -%>
     </ol>
   </body>
 </html>
@@ -20,13 +21,20 @@ EOT
 
 
   def initialize(file)
-    @links = File.readlines(file).map{|l| l.chomp}
+    @links = File.readlines(file).map do |l|
+      url, name, banner = l.parse_csv
+      Link.new(url, name, banner)
+    end
   end
 
   def to_html
     erb = ERB.new(TEMPLATE, nil, "-")
     erb.result(binding)
   end
+
+
+  Link = Struct.new(:url, :name, :banner)
+
 
 end   # of class LinkGenerator
 
