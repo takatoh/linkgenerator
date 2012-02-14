@@ -5,6 +5,8 @@ require 'erb'
 require 'optparse'
 
 
+SCRIPT_VERSION = "v0.1.0"
+
 class LinkGenerator
 
   TEMPLATE = <<EOT
@@ -44,6 +46,10 @@ opt = OptionParser.new
 opt.banner = <<EOB
 Usage: #{opt.program_name} [options] <file>
 EOB
+opt.on_tail('-v', '--version', 'Show version.'){|v|
+  print SCRIPT_VERSION + "\n"
+  exit
+}
 opt.on_tail('-h', '--help', 'Show this message.'){|v|
   print opt
   exit
