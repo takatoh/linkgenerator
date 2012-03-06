@@ -29,8 +29,13 @@ EOT
     end
   end
 
-  def to_html
-    erb = ERB.new(TEMPLATE, nil, "-")
+  def to_html(template_file = nil)
+    if template_file
+      template = File.read(template_file)
+    else
+      template = TEMPLATE
+    end
+    erb = ERB.new(template, nil, "-")
     erb.result(binding)
   end
 
@@ -42,10 +47,14 @@ end   # of class LinkGenerator
 
 
 
+options = {}
 opt = OptionParser.new
 opt.banner = <<EOB
 Usage: #{opt.program_name} [options] <file>
 EOB
+opt.on('-t', '--template=FILE', 'Use FILE as template.'){|v|
+  options[:template] = v
+}
 opt.on_tail('-v', '--version', 'Show version.'){|v|
   print SCRIPT_VERSION + "\n"
   exit
@@ -57,5 +66,5 @@ opt.on_tail('-h', '--help', 'Show this message.'){|v|
 opt.parse!
 
 
-print LinkGenerator.new(ARGV.shift).to_html
+print LinkGenerator.new(ARGV.shift).to_html(options[:template])
 
