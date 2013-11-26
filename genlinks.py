@@ -1,6 +1,9 @@
 import sys
 from jinja2 import Environment, DictLoader
+import argparse
 
+
+script_version = 'v0.0.1'
 
 templates = {'index.html': """<html>
   <body>
@@ -13,6 +16,21 @@ templates = {'index.html': """<html>
 </html>
 """
 }
+
+parser = argparse.ArgumentParser(description='Generate links from URL list.')
+parser.add_argument('file', metavar='FILE', nargs='?', action='store',
+                     help='specify URL list file.')
+parser.add_argument('-v', '--version', dest='version', action='store_true',
+                     help='show version.')
+args = parser.parse_args()
+
+if args.version:
+    print script_version
+    sys.exit()
+
+if len(sys.argv) == 1:
+    print 'error: too few arguments. type genlinks.py --help.'
+    sys.exit()
 
 filename = sys.argv[1]
 f = open(filename, 'r')
