@@ -20,9 +20,9 @@ class Link:
 templates = {'index.html': """<html>
   <body>
     <ul>
-      {% for link in links %}
+      {% for link in links -%}
         <li><a href="{{ link.url }}">{{ link.sitename }}</a></li>
-      {% endfor %}
+      {% endfor -%}
     </ul>
   </body>
 </html>
