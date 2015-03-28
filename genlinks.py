@@ -8,7 +8,7 @@ import codecs
 import argparse
 
 
-script_version = 'v0.1.0'
+script_version = 'v0.2.0'
 
 
 class Link:
