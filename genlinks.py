@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+# coding utf-8
+
 import sys
 import csv
 from jinja2 import Environment, DictLoader
+import codecs
 import argparse
 
 
@@ -25,6 +29,18 @@ templates = {'index.html': """<html>
 """
 }
 
+
+def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
+    csv_reader = csv.reader(utf_8_encoder(unicode_csv_data),
+                            dialect=dialect, **kwargs)
+    for row in csv_reader:
+        yield [unicode(cell, 'utf-8') for cell in row]
+
+def utf_8_encoder(unicode_csv_data):
+    for line in unicode_csv_data:
+        yield line.encode('utf-8')
+
+
 parser = argparse.ArgumentParser(description='Generate links from URL list.')
 parser.add_argument('file', metavar='FILE', nargs='?', action='store',
                      help='specify URL list file.')
@@ -37,8 +53,8 @@ if len(sys.argv) == 1:
     sys.exit()
 
 filename = sys.argv[1]
-csvfile = open(filename, 'r')
-reader = csv.reader(csvfile)
+csvfile = codecs.open(filename, 'r', 'utf-8')
+reader = unicode_csv_reader(csvfile)
 links = []
 for row in reader:
     url = row[0]
@@ -53,5 +69,4 @@ env = Environment(loader=DictLoader(templates))
 tmpl = env.get_template('index.html')
 html = tmpl.render(links=links)
 
-print html
-
+print html.encode('utf-8')
