@@ -44,11 +44,18 @@ def utf_8_encoder(unicode_csv_data):
 parser = argparse.ArgumentParser(description='Generate links from URL list.')
 parser.add_argument('file', metavar='FILE', nargs=1, action='store',
                      help='specify URL list file.')
+parser.add_argument('-t', '--template', dest='template', metavar='TEMPLATE', action='store',
+                     help='specify template.')
 parser.add_argument('-v', '--version', action='version', version=script_version,
                      help='show version.')
 args = parser.parse_args()
 
-filename = sys.argv[1]
+if args.template:
+    f = open(args.template, 'r')
+    templates['index.html'] = f.read()
+    f.close()
+
+filename = args.file[0]
 csvfile = codecs.open(filename, 'r', 'utf-8')
 reader = unicode_csv_reader(csvfile)
 links = []
