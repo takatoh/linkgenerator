@@ -1,11 +1,11 @@
-#! ruby
+#!/usr/bin/env ruby
 
 require 'csv'
 require 'erb'
 require 'optparse'
 
 
-SCRIPT_VERSION = "v0.1.1"
+SCRIPT_VERSION = "v0.2.0"
 
 class LinkGenerator
 
