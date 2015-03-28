@@ -42,15 +42,11 @@ def utf_8_encoder(unicode_csv_data):
 
 
 parser = argparse.ArgumentParser(description='Generate links from URL list.')
-parser.add_argument('file', metavar='FILE', nargs='?', action='store',
+parser.add_argument('file', metavar='FILE', nargs=1, action='store',
                      help='specify URL list file.')
 parser.add_argument('-v', '--version', action='version', version=script_version,
                      help='show version.')
 args = parser.parse_args()
-
-if len(sys.argv) == 1:
-    sys.stderr.write('error: too few arguments. type genlinks.py --help.\n')
-    sys.exit()
 
 filename = sys.argv[1]
 csvfile = codecs.open(filename, 'r', 'utf-8')
