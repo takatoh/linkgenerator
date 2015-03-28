@@ -28,13 +28,9 @@ templates = {'index.html': """<html>
 parser = argparse.ArgumentParser(description='Generate links from URL list.')
 parser.add_argument('file', metavar='FILE', nargs='?', action='store',
                      help='specify URL list file.')
-parser.add_argument('-v', '--version', dest='version', action='store_true',
+parser.add_argument('-v', '--version', action='version', version=script_version,
                      help='show version.')
 args = parser.parse_args()
-
-if args.version:
-    print script_version
-    sys.exit()
 
 if len(sys.argv) == 1:
     print 'error: too few arguments. type genlinks.py --help.'
