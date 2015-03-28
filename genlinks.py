@@ -33,7 +33,7 @@ parser.add_argument('-v', '--version', action='version', version=script_version,
 args = parser.parse_args()
 
 if len(sys.argv) == 1:
-    print 'error: too few arguments. type genlinks.py --help.'
+    sys.stderr.write('error: too few arguments. type genlinks.py --help.\n')
     sys.exit()
 
 filename = sys.argv[1]
